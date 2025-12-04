@@ -33,9 +33,7 @@ for row in range(rows):
 
 grid2 = grid
 
-loop = True
-
-while loop:
+while True:
     found_roll = False
     for row in range(rows):
         for col in range(cols):
@@ -47,7 +45,7 @@ while loop:
                 grid[row][col] = 'x'
                 found_roll = True
     if not found_roll:
-        loop = False
+        break
 
 print(part_1)
 print(part_2)
