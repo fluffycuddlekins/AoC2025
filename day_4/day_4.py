@@ -37,12 +37,12 @@ while True:
     found_roll = False
     for row in range(rows):
         for col in range(cols):
-            if grid[row][col] != "@":
+            if grid2[row][col] != "@":
                 continue
-            neighbors = count_neighbors(grid, row, col)
+            neighbors = count_neighbors(grid2, row, col)
             if neighbors < 4:
                 part_2 += 1
-                grid[row][col] = 'x'
+                grid2[row][col] = 'x'
                 found_roll = True
     if not found_roll:
         break
