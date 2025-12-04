@@ -12,11 +12,11 @@ for line in lines:
 rows = len(grid)
 cols = len(grid[0])
 
-def count_neighbors(board, rowf, colf):
+def count_neighbors(board, row_index, col_index):
     total = 0
-    for i in range(max(0,rowf-1), min(rows, rowf+2)):
-        for j in range(max(0,colf-1), min(cols,colf+2)):
-            if i == rowf and j == colf:
+    for i in range(max(0,row_index-1), min(rows, row_index+2)):
+        for j in range(max(0,col_index-1), min(cols,col_index+2)):
+            if i == row_index and j == col_index:
                 continue
             if board[i][j] == "@":
                 total += 1
