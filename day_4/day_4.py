@@ -1,3 +1,10 @@
+import copy
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+
+from matplotlib.animation import PillowWriter
+
 with open("input.txt") as file:
     lines = [line.strip() for line in file]
 
@@ -31,9 +38,22 @@ for row in range(rows):
         if neighbors < 4:
             part_1 += 1
 
-grid2 = grid
+grid2 = copy.deepcopy(grid)
+
+frames = []
+
+def board_to_array(board):
+    mapping = {
+        "@": 0,   # original live
+        "x": 1,   # converted
+        ".": 2    # empty / other
+    }
+    return np.array([[mapping.get(c, 0) for c in row1] for row1 in board])
 
 while True:
+    arr = board_to_array(grid2)
+    frames.append(arr.copy())
+
     found_roll = False
     for row in range(rows):
         for col in range(cols):
@@ -46,6 +66,26 @@ while True:
                 found_roll = True
     if not found_roll:
         break
+
+fig, ax = plt.subplots()
+im = ax.imshow(arr, cmap="magma")
+ax.axis("off")
+
+frame_text = fig.text(
+    0.5, 0.95, "Frame 0",
+    ha="center", va="top",
+    fontsize=14
+)
+
+def update(i):
+    im.set_data(frames[i])
+    frame_text.set_text(f"Frame {i+1}")
+    return im, frame_text
+
+ani = animation.FuncAnimation(fig, update, frames=len(frames), interval=250,blit=False)
+ani.save("grid_evolution.gif", writer=PillowWriter(fps=2))
+
+plt.show()
 
 print(part_1)
 print(part_2)
