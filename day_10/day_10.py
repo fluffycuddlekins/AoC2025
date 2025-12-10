@@ -60,7 +60,7 @@ for line in lines:
             f"p{pos}",
         )
 
-    prob.solve(PULP_CBC_CMD(msg=0))
+    prob.solve(PULP_CBC_CMD(msg=False))
     part_2 += sum([int(v.varValue) for v in press_counts])
 
 print(part_1)
